@@ -1,29 +1,45 @@
 ﻿using System.Linq;
+using TMPro;
 using UnityEngine;
 
-public class Test : MonoBehaviour {
-    void Start () {
+public class Test : MonoBehaviour
+{
+    [SerializeField]
+    private TextMeshProUGUI MessageText;
+
+    void Start()
+    {
         var db = MasterDataDB.DB;
 
         var saveDataManager = SaveDataManager.Instance;
-        saveDataManager.Load ("save-file-0");
+        saveDataManager.Load("save-file-0");
         var skillLevels = saveDataManager.SkillLevels;
 
-        foreach (var skill in db.SkillTable.All) {
-            Debug.Log ($"Skill Name: {skill.SkillName}");
+        foreach (var skill in db.SkillTable.All)
+        {
+            SetMessage($"Skill Name: {skill.SkillName}");
 
             var lv = skillLevels[skill.SkillID];
-            Debug.Log ($"Skill Lv: {lv}");
+            SetMessage($"Skill Lv: {lv}");
 
             var parameter = db.SkillParameterTable
-                .FindBySkillIDAndSkillLv ((skill.SkillID, lv));
-            Debug.Log ($"Skill Damage: {parameter.Damage}");
+                .FindBySkillIDAndSkillLv((skill.SkillID, lv));
+            SetMessage($"Skill Damage: {parameter.Damage}");
         }
 
-        var newLevels = skillLevels.Select (lv => {
+        var newLevels = skillLevels.Select(lv =>
+        {
             if (lv >= 9) return lv;
             return lv + 1;
-        }).ToList ();
-        saveDataManager.SaveSkillLevels ("save-file-0", newLevels);
+        }).ToList();
+        saveDataManager.SaveSkillLevels("save-file-0", newLevels);
+
+        
+    }
+
+    private void SetMessage(string msg)
+    {
+        MessageText.text += msg + "\n";
+        Debug.Log(msg);
     }
 }
