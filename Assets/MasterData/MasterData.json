@@ -1,0 +1,24 @@
+[	{
+		"corpse3": "挙げる！！",
+		"ID": 1,
+		"corpse2": "ホシを",
+		"Special": "TRUE",
+		"corpse1": "必ず",
+		"StringCheck": 0,
+		"createdTime": "2021-05-06T13:21:36.000Z"
+	},{
+		"corpse3": "殺された",
+		"ID": 2,
+		"corpse2": "嘘をついたら",
+		"corpse1": "エイプリルフールに",
+		"StringCheck": 0,
+		"createdTime": "2021-05-06T13:21:36.000Z"
+	},{
+		"corpse3": "握りしめた",
+		"ID": 3,
+		"corpse2": "黒い日傘を",
+		"corpse1": "右手に",
+		"StringCheck": 0,
+		"createdTime": "2021-05-06T13:21:36.000Z"
+	}
+]
