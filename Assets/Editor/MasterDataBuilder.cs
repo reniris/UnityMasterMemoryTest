@@ -1,81 +1,73 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using MasterData;
+using MessagePack;
 using MessagePack.Resolvers;
 using UnityEditor;
 using UnityEngine;
 
-public static class MasterDataBuilder {
+public static class MasterDataBuilder
+{
 
-    [MenuItem ("MasterMemory/Build")]
-    private static void BuildMasterData () {
-        try {
-            CompositeResolver.RegisterAndSetAsDefault (new [] {
+    [MenuItem("MasterMemory/BuildMasterData")]
+    private static void BuildMasterData()
+    {
+        try
+        {
+            CompositeResolver.RegisterAndSetAsDefault(new[] {
                 MasterMemoryResolver.Instance,
                     GeneratedResolver.Instance,
                     StandardResolver.Instance
             });
-        } catch { }
+        }
+        catch { }
 
-        var builder = new DatabaseBuilder ();
-        builder = BuildParson (builder);
-        builder = BuildSkill (builder);
-        builder = BuildSkillParameter (builder);
+        //マスターデータをビルドする
+        var builder = new DatabaseBuilder();
+        BuildMastarData(builder);
 
-        byte[] data = builder.Build ();
+        byte[] data = builder.Build();
 
         var resourcesDir = $"{Application.dataPath}/Resources";
-        Directory.CreateDirectory (resourcesDir);
+        Directory.CreateDirectory(resourcesDir);
         var filename = "/master-data.bytes";
 
-        using (var fs = new FileStream (resourcesDir + filename, FileMode.Create)) {
-            fs.Write (data, 0, data.Length);
+        using (var fs = new FileStream(resourcesDir + filename, FileMode.Create))
+        {
+            fs.Write(data, 0, data.Length);
         }
 
-        Debug.Log ($"Write byte[] to: {resourcesDir + filename}");
+        Debug.Log($"Write byte[] to: {resourcesDir + filename}");
 
-        AssetDatabase.Refresh ();
+        AssetDatabase.Refresh();
     }
 
-    private static DatabaseBuilder BuildParson (DatabaseBuilder builder) {
+    private static void BuildMastarData(DatabaseBuilder builder)
+    {
+        string filename = "MasterData.json";
+        var masterDataDir = $"{Application.dataPath}/MasterData";
+        var filePath = $"{masterDataDir}/{filename}";
 
-        builder.Append (new Person[] {
-            new Person { PersonId = 0, Age = 13, Gender = Gender.Male, Name = "Dana Terry" },
-            new Person { PersonId = 1, Age = 17, Gender = Gender.Male, Name = "Kirk Obrien" },
-            new Person { PersonId = 2, Age = 31, Gender = Gender.Male, Name = "Wm Banks" },
-            new Person { PersonId = 3, Age = 44, Gender = Gender.Male, Name = "Karl Benson" },
-            new Person { PersonId = 4, Age = 23, Gender = Gender.Male, Name = "Jared Holland" },
-            new Person { PersonId = 5, Age = 27, Gender = Gender.Female, Name = "Jeanne Phelps" },
-            new Person { PersonId = 6, Age = 25, Gender = Gender.Female, Name = "Willie Rose" },
-            new Person { PersonId = 7, Age = 11, Gender = Gender.Female, Name = "Shari Gutierrez" },
-            new Person { PersonId = 8, Age = 63, Gender = Gender.Female, Name = "Lori Wilson" },
-            new Person { PersonId = 9, Age = 34, Gender = Gender.Female, Name = "Lena Ramsey" },
-        });
-        return builder;
-    }
+        try
+        {
+            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                var reader = new StreamReader(fs, Encoding.GetEncoding("Shift_JIS"));
+                var dynamicjson = MessagePackSerializer.Deserialize<dynamic>(MessagePack.MessagePackSerializer.FromJson(reader));
+          
+                IEnumerable<object> jsondata = dynamicjson;
+                var msg_list = jsondata.Select(i => new GameMessage((Dictionary<object, object>)i)).ToArray();
 
-    private static DatabaseBuilder BuildSkill (DatabaseBuilder builder) {
-        builder.Append (new Skill[] {
-            new Skill { SkillID = 0, SkillName = "スキル0" },
-            new Skill { SkillID = 1, SkillName = "スキル1" },
-            new Skill { SkillID = 2, SkillName = "スキル2" },
-            new Skill { SkillID = 3, SkillName = "スキル3" },
-        });
-        return builder;
-    }
-
-    private static DatabaseBuilder BuildSkillParameter (DatabaseBuilder builder) {
-        var skillParameters = new List<SkillParameter> ();
-        for (int i = 0; i < 4; i++) {
-            for (int lv = 1; lv < 10; lv++) {
-                skillParameters.Add (new SkillParameter {
-                    SkillID = i,
-                        SkillLv = lv,
-                        Damage = lv * 100
-                });
+                builder.Append(msg_list);
             }
         }
-        builder.Append (skillParameters);
-        return builder;
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+            //CreateNewSavedata();
+        }
     }
 }
