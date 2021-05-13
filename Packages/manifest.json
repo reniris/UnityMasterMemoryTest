@@ -1,5 +1,9 @@
 {
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "com.unity.addressables": "1.18.4",
+>>>>>>> develop_reniris
     "com.unity.collab-proxy": "1.3.9",
     "com.unity.ext.nunit": "1.0.6",
     "com.unity.ide.rider": "2.0.7",

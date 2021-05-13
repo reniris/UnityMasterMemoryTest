@@ -4,6 +4,7 @@
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
+[Ll]ogs/
 
 # Visual Studio cache directory
 .vs/
@@ -35,6 +36,16 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# User Data
 Assets/SaveData/
+Assets/Scripts/Generated/
 Assets/TextMesh Pro/
-Logs/
+Assets/Font/SourceHanSerif-Regular SDF.asset
+Assets/Font/SourceHanSerif-Regular SDF.asset.meta
+Assets/Font/SourceHanSerif-Regular.otf
+Assets/Samples/
+Assets/Samples.meta
+Assets/Scripts/Generated/
+Assets/Resources/master-data.bytes
+

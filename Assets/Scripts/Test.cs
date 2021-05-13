@@ -6,6 +6,7 @@ public class Test : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI MessageText;
+<<<<<<< HEAD
 
     void Start()
     {
@@ -37,6 +38,16 @@ public class Test : MonoBehaviour
         
     }
 
+=======
+
+    void Start()
+    {
+        var db = MasterDataDB.DB;
+        var msg = db.GameMessageTable.FindByID(1);
+        SetMessage(msg.corpse1 + msg.corpse2 + msg.corpse3);
+    }
+
+>>>>>>> develop_reniris
     private void SetMessage(string msg)
     {
         MessageText.text += msg + "\n";

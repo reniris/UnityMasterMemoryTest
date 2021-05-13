@@ -670,8 +670,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
+<<<<<<< HEAD
   m_fontAsset: {fileID: 11400000, guid: 02bcc874c81de6943a8f3efbdc6c42a7, type: 2}
   m_sharedMaterial: {fileID: 2822150445528718224, guid: 02bcc874c81de6943a8f3efbdc6c42a7,
+=======
+  m_fontAsset: {fileID: 11400000, guid: a249303e891bdee4797b0fb88d2422d0, type: 2}
+  m_sharedMaterial: {fileID: 3129337093036404354, guid: a249303e891bdee4797b0fb88d2422d0,
+>>>>>>> develop_reniris
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
