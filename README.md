@@ -1,6 +1,7 @@
 # UnityMasterMemoryTest
 https://github.com/MatchaChoco010/UnityMasterMemoryTest
 を自分用に改変しました
+マスターデータを自作JSONファイルから生成するようにしました
 
 - blog:
   - [UnityのマスタデータにMasterMemoryを使ってみる | 測度ゼロの抹茶チョコ](https://matcha-choco010.net/2019/08/22/Unity%E3%81%AE%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%87%E3%83%BC%E3%82%BF%E3%81%ABMasterMemory%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B/)
